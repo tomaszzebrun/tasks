@@ -1,0 +1,22 @@
+{
+	"name": "rocket",
+	"brand": "trabant",
+	"seats": [{
+			"material": "some",
+			"color": "red"
+		},
+		{
+			"material": "some",
+			"color": "blue"
+		},
+		{
+			"material": "some",
+			"color": "black"
+		},
+		{
+			"material": "some",
+			"color": "yellow"
+		}
+	],
+	"capacity": 950
+}
