@@ -8,10 +8,7 @@ import com.crud.tasks.trello.client.TrelloClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -22,16 +19,16 @@ public class TrelloController {
     private final TrelloClient trelloClient;
 
     @GetMapping("getTrelloBoards")
-    public void getTrelloBoards() {
-
-        List<TrelloBoardDto> trelloBoards = trelloClient.getTrelloBoards();
+    public List<TrelloBoardDto>  getTrelloBoards() {
+        return trelloClient.getTrelloBoards();
 /*
         trelloBoards.forEach(trelloBoardDto -> {
             System.out.println(trelloBoardDto.getId() + " " + trelloBoardDto.getName());
         });
 */
+/*
         System.out.println(Optional.ofNullable(trelloBoards.stream()
-                            .filter(dto -> !dto.getId().isEmpty() && !dto.getName().isEmpty())
+                            .filter(dto -> Objects.nonNull(dto.getId()) && Objects.nonNull(dto.getName()))
                             .filter(dto -> dto.getName().contains("Kodilla"))
                             .map(dto -> dto.getId() + " " + dto.getName())
                             .collect(Collectors.joining("\n")))
@@ -49,7 +46,7 @@ public class TrelloController {
                 );
             });
         });
-
+*/
     }
 
     @PostMapping("createTrelloCard")
