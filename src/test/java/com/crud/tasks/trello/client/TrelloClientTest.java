@@ -1,6 +1,6 @@
 package com.crud.tasks.trello.client;
 
-import com.crud.tasks.domain.CreatedTrelloCard;
+import com.crud.tasks.domain.CreatedTrelloCardDto;
 import com.crud.tasks.domain.TrelloBoardDto;
 import com.crud.tasks.domain.TrelloCardDto;
 import com.crud.tasks.trello.config.TrelloConfig;
@@ -40,7 +40,7 @@ class TrelloClientTest {
         when(trelloConfig.getTrelloUsername()).thenReturn("test");
 
         TrelloBoardDto[] trelloBoards = new TrelloBoardDto[1];
-        trelloBoards[0] = new TrelloBoardDto("test_id", "test_board", new ArrayList<>());
+        trelloBoards[0] = new TrelloBoardDto("t_id", "t_board", new ArrayList<>());
         URI uri = new URI("http://test.com/members/test/boards?key=test&token=test&fields=name,id&lists=all");
 
         when(restTemplate.getForObject(uri, TrelloBoardDto[].class)).thenReturn(trelloBoards);
@@ -50,8 +50,8 @@ class TrelloClientTest {
 
         //Then
         assertEquals(1, fetchedTrelloBoards.size());
-        assertEquals("test_id", fetchedTrelloBoards.get(0).getId());
-        assertEquals("test_board", fetchedTrelloBoards.get(0).getName());
+        assertEquals("t_id", fetchedTrelloBoards.get(0).getId());
+        assertEquals("t_board", fetchedTrelloBoards.get(0).getName());
         assertEquals(new ArrayList<>(), fetchedTrelloBoards.get(0).getLists());
     }
 
@@ -70,15 +70,15 @@ class TrelloClientTest {
         );
         URI uri = new URI("http://test.com/cards?key=test&token=test&name=Test%20task&desc=Test%20Description&pos=top&idList=test_id");
 
-        CreatedTrelloCard createdTrelloCard = new CreatedTrelloCard(
+        CreatedTrelloCardDto createdTrelloCardDto = new CreatedTrelloCardDto(
                 "1",
                 "test task",
                 "http://test.com"
         );
 
-        when(restTemplate.postForObject(uri, null, CreatedTrelloCard.class)).thenReturn(createdTrelloCard);
+        when(restTemplate.postForObject(uri, null, CreatedTrelloCardDto.class)).thenReturn(createdTrelloCardDto);
         // When
-        CreatedTrelloCard newCard = trelloClient.createNewCard(trelloCardDto);
+        CreatedTrelloCardDto newCard = trelloClient.createNewCard(trelloCardDto);
 
         // Then
         assertEquals("1", newCard.getId());
