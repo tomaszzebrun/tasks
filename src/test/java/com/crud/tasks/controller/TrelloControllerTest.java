@@ -22,7 +22,10 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @SpringJUnitWebConfig
 @WebMvcTest(TrelloController.class)
@@ -37,7 +40,7 @@ class TrelloControllerTest {
     @Test
     public void shouldFetchEmptyTrelloBoards() throws Exception {
         //Given
-        when(trelloFacade.fetchTrelloBoards()).thenReturn(List.of());
+        when(trelloFacade.fetchTrelloBoards()).thenReturn(new ArrayList<>());
 
         //Then & When
         mockMvc
@@ -51,8 +54,10 @@ class TrelloControllerTest {
     @Test
     public void shouldFetchTrelloBoards() throws Exception {
         //Given
-        List<TrelloListDto> trelloLists = List.of(new TrelloListDto("1", "Test list", false));
-        List<TrelloBoardDto> trelloBoards = List.of(new TrelloBoardDto("1", "Test Task", trelloLists));
+        List<TrelloListDto> trelloLists = Stream.of(new TrelloListDto("1", "Test list", false))
+                .collect(Collectors.toList());
+        List<TrelloBoardDto> trelloBoards = Stream.of(new TrelloBoardDto("1", "Test Task", trelloLists))
+                .collect(Collectors.toList());
         when(trelloFacade.fetchTrelloBoards()).thenReturn(trelloBoards);
 
         //Then & When

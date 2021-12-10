@@ -17,7 +17,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -41,7 +43,8 @@ class TaskControllerTest {
     @Test
     public void testGetTasks() throws Exception {
         // Given
-        List<TaskDto> taskList = List.of(new TaskDto(1L, "Test title", "Test content"));
+        List<TaskDto> taskList = Stream.of(new TaskDto(1L, "Test title", "Test content"))
+                .collect(Collectors.toList());
         when(taskMapper.mapToTaskDtoList(anyList())).thenReturn(taskList);
 
         // When & Then

@@ -13,7 +13,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyList;
@@ -40,18 +43,22 @@ public class TrelloFacadeTest {
     public void shouldFetchEmptyList() {
         //Given
         List<TrelloListDto> trelloList =
-                List.of(new TrelloListDto("1", "test_list", false));
+                Stream.of(new TrelloListDto("1", "test_list", false))
+                .collect(Collectors.toList());
         List<TrelloBoardDto> trelloBoards =
-                List.of(new TrelloBoardDto("1", "test", trelloList));
+                Stream.of(new TrelloBoardDto("1", "test", trelloList))
+                .collect(Collectors.toList());
         List<TrelloList> mappedTrelloLists =
-                List.of(new TrelloList("1", "test_list", false));
+                Stream.of(new TrelloList("1", "test_list", false))
+                .collect(Collectors.toList());
         List<TrelloBoard> mappedTrelloBoards =
-                List.of(new TrelloBoard("1", "test", mappedTrelloLists));
+                Stream.of(new TrelloBoard("1", "test", mappedTrelloLists))
+                .collect(Collectors.toList());
 
         when(trelloService.fetchTrelloBoards()).thenReturn(trelloBoards);
         when(trelloMapper.mapToBoards(trelloBoards)).thenReturn(mappedTrelloBoards);
-        when(trelloMapper.mapToBoardsDto(anyList())).thenReturn(List.of());
-        when(trelloValidator.validateTrelloBoards(mappedTrelloBoards)).thenReturn(List.of());
+        when(trelloMapper.mapToBoardsDto(anyList())).thenReturn(new ArrayList<>());
+        when(trelloValidator.validateTrelloBoards(mappedTrelloBoards)).thenReturn(new ArrayList<>());
 
         //When
         List<TrelloBoardDto> trelloBoardDtos = trelloFacade.fetchTrelloBoards();
@@ -65,13 +72,17 @@ public class TrelloFacadeTest {
     public void shouldFetchTrelloBoards() {
         //Given
         List<TrelloListDto> trelloList =
-                List.of(new TrelloListDto("1", "test_list", false));
+                Stream.of(new TrelloListDto("1", "test_list", false))
+                .collect(Collectors.toList());
         List<TrelloBoardDto> trelloBoards =
-                List.of(new TrelloBoardDto("1", "test", trelloList));
+                Stream.of(new TrelloBoardDto("1", "test", trelloList))
+                .collect(Collectors.toList());
         List<TrelloList> mappedTrelloLists =
-                List.of(new TrelloList("1", "test_list", false));
+                Stream.of(new TrelloList("1", "test_list", false))
+                .collect(Collectors.toList());
         List<TrelloBoard> mappedTrelloBoards =
-                List.of(new TrelloBoard("1", "test", mappedTrelloLists));
+                Stream.of(new TrelloBoard("1", "test", mappedTrelloLists))
+                .collect(Collectors.toList());
 
         when(trelloService.fetchTrelloBoards()).thenReturn(trelloBoards);
         when(trelloMapper.mapToBoards(trelloBoards)).thenReturn(mappedTrelloBoards);
