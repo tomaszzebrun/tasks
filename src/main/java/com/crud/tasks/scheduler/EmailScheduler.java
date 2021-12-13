@@ -20,9 +20,7 @@ public class EmailScheduler {
 
     @Autowired
     private MailCreatorService mailCreatorService;
-
     private static final String SUBJECT = "Tasks: Once a day email";
-
     private final JavaMailSender javaMailSender;
     private final TaskRepository taskRepository;
     private final AdminConfig adminConfig;

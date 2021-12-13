@@ -9,7 +9,6 @@ import org.thymeleaf.context.Context;
 
 @Service
 public class MailCreatorService {
-
     @Autowired
     private AdminConfig adminConfig;
 
@@ -40,5 +39,4 @@ public class MailCreatorService {
         context.setVariable("admin_name", adminConfig.getAdminName());
         return templateEngine.process("mail/created-scheduler-information-mail", context);
     }
-
 }
